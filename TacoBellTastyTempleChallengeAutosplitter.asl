@@ -13,7 +13,7 @@ state("DOSBOX")
 
 start
 {
-	if(old.Health != current.Health)
+	if(old.Health == 0x19000)
 	{
 		return true;
 	}
@@ -33,37 +33,37 @@ startup
 split
 {
 	//Bronze Key
-	if(old.BronzeKey != current.BronzeKey)
+	if(old.BronzeKey == 0x400)
 		{
 		return settings["Split on Bronze Key"];
 		}
 	
 	//Gold Key
-	if(old.GoldKey != current.GoldKey)
+	if(old.GoldKey == 0x400)
 		{
 		return settings["Split on Gold Key"];
 		}
 
 	//Silver Key
-	if(old.SilverKey != current.SilverKey)
+	if(old.SilverKey == 0x400)
 		{
 		return settings["Split on Silver Key"];
 		}
 
 	//Boss Key
-	if(old.BossKey != current.BossKey)
+	if(old.BossKey == 0x400)
 		{
 		return settings["Split on Boss Key"];
 		}
 
 	//Crowbar
-	if(old.Crowbar != current.Crowbar)
+	if(old.Crowbar == 0x400)
 		{
 		return settings["Split on Crowbar"];
 		}
 
 	//Machete
-	if(old.Machete != current.Machete)
+	if(old.Machete == 0x400)
 		{
 		return settings["Split on Machete"];
 		}
@@ -75,7 +75,7 @@ split
 		}
 
 	//End of Game
-	if(old.EndGame != current.EndGame)
+	if(old.EndGame == 0x400)
 		{
 		return true;
 		}
