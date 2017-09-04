@@ -82,6 +82,13 @@ split
 
 }
 
+reset
+{
+	if(old.Health == 0x0)
+	{
+	return true;
+	}
+}
 
 
 
