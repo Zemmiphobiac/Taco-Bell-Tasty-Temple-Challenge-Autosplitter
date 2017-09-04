@@ -33,37 +33,37 @@ startup
 split
 {
 	//Bronze Key
-	if(old.BronzeKey == 0x400)
+	if(old.BronzeKey != current.BronzeKey)
 		{
 		return settings["Split on Bronze Key"];
 		}
 	
 	//Gold Key
-	if(old.GoldKey == 0x400)
+	if(old.GoldKey != current.GoldKey)
 		{
 		return settings["Split on Gold Key"];
 		}
 
 	//Silver Key
-	if(old.SilverKey == 0x400)
+	if(old.SilverKey != current.SilverKey)
 		{
 		return settings["Split on Silver Key"];
 		}
 
 	//Boss Key
-	if(old.BossKey == 0x400)
+	if(old.BossKey != current.BossKey)
 		{
 		return settings["Split on Boss Key"];
 		}
 
 	//Crowbar
-	if(old.Crowbar == 0x400)
+	if(old.Crowbar != current.Crowbar)
 		{
 		return settings["Split on Crowbar"];
 		}
 
 	//Machete
-	if(old.Machete == 0x400)
+	if(old.Machete != current.Machete)
 		{
 		return settings["Split on Machete"];
 		}
@@ -75,7 +75,7 @@ split
 		}
 
 	//End of Game
-	if(old.EndGame == 0x400)
+	if(old.EndGame != current.EndGame)
 		{
 		return true;
 		}
