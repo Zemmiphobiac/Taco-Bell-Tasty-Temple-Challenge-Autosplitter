@@ -97,7 +97,6 @@ reset
 	return true;
 	}
 }
-3
 
 
 //Consumables: 27C73C
