@@ -81,7 +81,6 @@ split
 		{
 		return settings["Split on Enemy Killed"];
 		}
-	//Killed Enemy
 
 	//End of Game
 	if(old.EndGame != current.EndGame)
