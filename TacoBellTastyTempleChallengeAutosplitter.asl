@@ -9,6 +9,7 @@ state("DOSBOX")
 	int Machete : 0x193A1A0, 0x429F14;
 	int Crowbar : 0x193A1A0, 0x4199E4;
 	int EndGame : 0x193A1A0, 0x27C64C;
+	int EnemyKilled : 0x193A1A0, 0x27C69C;
 }
 
 start
@@ -28,6 +29,7 @@ startup
 	settings.Add("Split on Crowbar", true);
 	settings.Add("Split on Machete", true);
 	settings.Add("Split on Consumables", false);
+	settings.Add("Split on Enemy Killed", false);
 }
 
 split
@@ -74,6 +76,13 @@ split
 		return settings["Split on Consumables"];
 		}
 
+	//Killed Enemy
+	if(old.EnemyKilled != current.EnemyKilled)
+		{
+		return settings["Split on Enemy Killed"];
+		}
+	//Killed Enemy
+
 	//End of Game
 	if(old.EndGame != current.EndGame)
 		{
@@ -89,7 +98,7 @@ reset
 	return true;
 	}
 }
-
+3
 
 
 //Consumables: 27C73C
@@ -101,3 +110,4 @@ reset
 //Silver Key: 47BE94
 //Boss Key: 450CA4
 //End Game: 27C64C
+//Enemy Killed: 27C69C
