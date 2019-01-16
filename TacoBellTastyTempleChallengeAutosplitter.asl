@@ -72,6 +72,7 @@ start {
 	if (old.Health == 0x19000) {
 		vars.enemiesKilled = 0;
 		vars.itemCount = 0;
+        vars.allItems = false;
 		return true;
 	}
 }
