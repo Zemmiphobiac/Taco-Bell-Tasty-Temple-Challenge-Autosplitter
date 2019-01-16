@@ -29,6 +29,7 @@ init {
 	
 	vars.enemiesKilled = 0;
 	vars.itemCount = 0;
+	vars.allItems = false;
 	
 	if (settings["Display amount of Items Collected"]
 		|| settings["Display amount of Enemies Killed"]) {
@@ -124,6 +125,11 @@ split {
 
 	// Any% Ending
 	if (old.EndGame != current.EndGame) {
+		return true;
+	}
+	// 100% Ending
+	if (vars.itemCount == 55 && vars.enemiesKilled == 59 && !vars.allItems) {
+		vars.allItems = true;
 		return true;
 	}
 	
