@@ -128,7 +128,7 @@ split {
 		return true;
 	}
 	// 100% Ending
-	if (vars.itemCount == 55 && vars.enemiesKilled == 59 && !vars.allItems) {
+	if (vars.itemCount >= 55 && vars.enemiesKilled >= 60 && !vars.allItems) {
 		vars.allItems = true;
 		return true;
 	}
