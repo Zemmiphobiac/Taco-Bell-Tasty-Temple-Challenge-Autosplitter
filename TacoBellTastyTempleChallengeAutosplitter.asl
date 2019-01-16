@@ -19,28 +19,58 @@ startup {
 	settings.Add("Split on Boss Key", true);
 	settings.Add("Split on Crowbar", true);
 	settings.Add("Split on Machete", true);
-	settings.Add("Split on Consumables", false);
+	settings.Add("Display amount of Items Collected", false);
 	settings.Add("Display amount of Enemies Killed", false);
 }
 
 init {
-	vars.tcs = null;
-	vars.enemiesKilled = 0;
+	vars.tcsItem = null;
+	vars.tcsEnemy = null;
 	
-	foreach (LiveSplit.UI.Components.IComponent component in timer.Layout.Components) {
-		if (component.GetType().Name == "TextComponent") {
-			vars.tc = component;
-			vars.tcs = vars.tc.Settings;
-			vars.tcs.Text1 = "Enemies Killed:";
-			vars.tcs.Text2 = "0";
-			break;
+	vars.enemiesKilled = 0;
+	vars.itemCount = 0;
+	
+	if (settings["Display amount of Items Collected"]
+		|| settings["Display amount of Enemies Killed"]) {
+		
+		bool secondText = false;
+		foreach (LiveSplit.UI.Components.IComponent component in timer.Layout.Components) {
+			if (component.GetType().Name == "TextComponent") {
+				// This is a bit of a mess but it should let you enable the options independently
+				if (secondText) {
+					vars.tcEnemy = component;
+					vars.tcsEnemy = vars.tcEnemy.Settings;
+					vars.tcsEnemy.Text1 = "Enemies Killed:";
+					vars.tcsEnemy.Text2 = "0";
+					break;
+				} else {
+					if (settings["Display amount of Items Collected"]) {
+						vars.tcItem = component;
+						vars.tcsItem = vars.tcItem.Settings;
+						vars.tcsItem.Text1 = "Items Collected:";
+						vars.tcsItem.Text2 = "0";
+						
+						if (settings["Display amount of Items Collected"]) {
+							secondText = true;
+						} else {
+							break;
+						}
+					} else {
+						vars.tcEnemy = component;
+						vars.tcsEnemy = vars.tcEnemy.Settings;
+						vars.tcsEnemy.Text1 = "Enemies Killed:";
+						vars.tcsEnemy.Text2 = "0";
+					}
+				}
+			}
 		}
 	}
 }
 
 start {
 	if (old.Health == 0x19000) {
-		vars.tcs.Text2 = "0";
+		vars.enemiesKilled = 0;
+		vars.itemCount = 0;
 		return true;
 	}
 }
@@ -48,50 +78,61 @@ start {
 split {
 	// Bronze Key
 	if (old.BronzeKey != current.BronzeKey) {
+		vars.itemCount++;
 		return settings["Split on Bronze Key"];
 	}
 	
 	// Gold Key
 	if (old.GoldKey != current.GoldKey) {
+		vars.itemCount++;
 		return settings["Split on Gold Key"];
 	}
 
 	// Silver Key
 	if (old.SilverKey != current.SilverKey) {
+		vars.itemCount++;
 		return settings["Split on Silver Key"];
 	}
 
 	// Boss Key
 	if (old.BossKey != current.BossKey) {
+		vars.itemCount++;
 		return settings["Split on Boss Key"];
 	}
 
 	// Crowbar
 	if (old.Crowbar != current.Crowbar) {
+		vars.itemCount++;
 		return settings["Split on Crowbar"];
 	}
 
 	// Machete
 	if (old.Machete != current.Machete) {
+		vars.itemCount++;
 		return settings["Split on Machete"];
 	}
 
 	// Consumables
 	if (old.Consumables != current.Consumables) {
-		return settings["Split on Consumables"];
+		vars.itemCount++;
 	}
 
 	// Killed Enemy
-	if (settings["Display amount of Enemies Killed"]
-		&& old.EnemyKilled != current.EnemyKilled) {
-		
+	if (old.EnemyKilled != current.EnemyKilled) {
 		vars.enemiesKilled++;
-		vars.tcs.Text2 = vars.enemiesKilled.ToString();
 	}
 
-	// End of Game
+	// Any% Ending
 	if (old.EndGame != current.EndGame) {
 		return true;
+	}
+	
+	// Update Text Components
+	if (settings["Display amount of Items Collected"]) {
+		vars.tcsItem.Text2 = vars.itemCount.ToString();
+	}
+	if (settings["Display amount of Enemies Killed"]) {
+		vars.tcsEnemy.Text2 = vars.enemiesKilled.ToString();
 	}
 }
 
